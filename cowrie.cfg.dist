@@ -11,7 +11,7 @@
 # connection as the sensor name.
 #
 # (default: not specified)
-#sensor_name=myhostname
+sensor_name=server2
 
 # IP addresses to listen for incoming SSH connections.
 #
@@ -37,7 +37,7 @@
 # environment.
 #
 # (default: svr04)
-hostname = svr04
+hostname = server2
 
 # Directory where to save log files in.
 #
@@ -54,7 +54,7 @@ download_path = dl
 # the file will not be stored on disk at all.
 #
 # (default: 0)
-#download_limit_size = 10485760
+download_limit_size = 2048
 
 # Directory where virtual file contents are kept in.
 #
@@ -149,7 +149,7 @@ sftp_enabled = true
 # Useful if you use portforwarding or other mechanisms. If empty, cowrie
 # will determine by itself. Used in 'netstat' output
 #
-#internet_facing_ip = 9.9.9.9
+internet_facing_ip = 5.9.236.127
 
 # SSH Version String
 #
