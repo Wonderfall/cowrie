@@ -411,4 +411,4 @@ Try `iptables -h\' or \'iptables --help\' for more information."""
         self.exit()
 
 # Definition
-commands['/sbin/iptables'] = command_iptables
+commands['iptables'] = command_iptables
