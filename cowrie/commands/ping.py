@@ -64,10 +64,15 @@ class command_ping(HoneyPotCommand):
             else:
                 self.writeln('ping: unknown host %s' % self.host)
                 self.exit()
-        else:
+        elif '.' in self.host:
             s = hashlib.md5(self.host).hexdigest()
             self.ip = '.'.join([str(int(x, 16)) for x in
                 (s[0:2], s[2:4], s[4:6], s[6:8])])
+        elif self.host == 'localhost':
+            self.ip = '172.0.0.1'
+        else:
+            self.writeln('ping: unknown host %s' % self.host)
+            self.exit()
 
         self.running = True
         self.writeln('PING %s (%s) 56(84) bytes of data.' % \
@@ -76,9 +81,9 @@ class command_ping(HoneyPotCommand):
         self.count = 0
 
     def showreply(self):
-        if self.host in ["localhost", "172.0.0.1", "::1"]:
-            ms = 0 + random.random() * 0.4
-        elif ("172." in self.host) or ("192.168." in self.host) or ("10." in self.host) :
+        if self.ip == '172.0.0.1':
+            ms = 0 + random.random() * 0.2
+        elif ("172." in self.ip) or ("192.168." in self.ip) or ("10." in self.ip) :
             ms = 1 + random.random() * 1
         else: 
             ms = 20 + random.random() * 10
