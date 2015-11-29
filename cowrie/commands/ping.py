@@ -6,10 +6,12 @@ import random
 import hashlib
 import socket
 import getopt
+import struct
 
 from twisted.internet import reactor
-
 from cowrie.core.honeypot import HoneyPotCommand
+from struct import *
+from socket import *
 
 commands = {}
 
@@ -21,6 +23,20 @@ class command_ping(HoneyPotCommand):
             return True
         except:
             return False
+    
+    def local_ip(self, ip):     
+        f = unpack('!I',inet_pton(AF_INET,ip))[0]
+        private = (          
+            ### RFC1918
+            [ 2130706432, 4278190080 ], # 127.0.0.0,   255.0.0.0
+            [ 3232235520, 4294901760 ], # 192.168.0.0, 255.255.0.0
+            [ 2886729728, 4293918720 ], # 172.16.0.0,  255.240.0.0
+            [ 167772160,  4278190080 ], # 10.0.0.0,    255.0.0.0
+        )                                                                                            
+        for net in private:                                                                          
+            if (f & net[1]) == net[0]:                                                               
+                return True                                                                          
+        return False 
 
     def start(self):
         self.host = None
@@ -81,12 +97,12 @@ class command_ping(HoneyPotCommand):
         self.count = 0
 
     def showreply(self):
-        if self.ip == '172.0.0.1':
-            ms = 0 + random.random() * 0.2
-        elif ("172." in self.ip) or ("192.168." in self.ip) or ("10." in self.ip) :
-            ms = 1 + random.random() * 1
-        else: 
-            ms = 20 + random.random() * 10
+        if self.ip == '172.0.0.1':                                                                   
+            ms = 0 + random.random() * 0.2                                                           
+        elif self.local_ip(self.host):                                                               
+            ms = 1 + random.random() * 1                                                             
+        else:                                                                                        
+            ms = 20 + random.random() * 10 
         self.writeln(
             '64 bytes from %s (%s): icmp_seq=%d ttl=50 time=%.1f ms' % \
             (self.host, self.ip, self.count + 1, ms))
