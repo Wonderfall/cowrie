@@ -65,6 +65,6 @@ Cannot get message level: No such device
 Cannot get link status: No such device
 No data available""")
 
-commands['/sbin/ethtool'] = command_ethtool
+commands['ethtool'] = command_ethtool
 
 # vim: set sw=4 et:
