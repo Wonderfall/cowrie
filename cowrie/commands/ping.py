@@ -18,11 +18,16 @@ commands = {}
 class command_ping(HoneyPotCommand):
 
     def valid_ip(self, address):
-        try:
-            socket.inet_aton(address)
-            return True
-        except:
+        a = address.split('.')
+        if len(a) != 4:
             return False
+        for x in a:
+            if not x.isdigit():
+                return False
+            i = int(x)
+            if i < 0 or i > 255:
+                return False
+        return True
     
     def local_ip(self, ip):     
         f = unpack('!I',inet_pton(AF_INET,ip))[0]
