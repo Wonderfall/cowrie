@@ -31,6 +31,6 @@ lo        Link encap:Local Loopback
         self.protocol.kippoIP.rsplit('.', 1)[0])
         self.protocol.writeln(l)
 
-commands['/sbin/ifconfig'] = command_ifconfig
+commands['ifconfig'] = command_ifconfig
 
 # vim: set sw=4 et:
