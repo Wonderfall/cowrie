@@ -76,10 +76,12 @@ class command_ping(HoneyPotCommand):
         self.count = 0
 
     def showreply(self):
-        if self.host == 'localhost':
-            ms = 0 + random.random() * 0.5
+        if self.host in ["localhost", "172.0.0.1", "::1"]:
+            ms = 0 + random.random() * 0.4
+        elif ("172." in self.host) or ("192.168." in self.host) or ("10." in self.host) :
+            ms = 1 + random.random() * 1
         else: 
-            ms = 40 + random.random() * 10
+            ms = 20 + random.random() * 10
         self.writeln(
             '64 bytes from %s (%s): icmp_seq=%d ttl=50 time=%.1f ms' % \
             (self.host, self.ip, self.count + 1, ms))
