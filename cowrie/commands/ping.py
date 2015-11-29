@@ -104,7 +104,7 @@ class command_ping(HoneyPotCommand):
     def showreply(self):
         if self.ip == '172.0.0.1':                                                                   
             ms = 0 + random.random() * 0.2                                                           
-        elif self.local_ip(self.host):                                                               
+        elif self.local_ip(self.ip):                                                               
             ms = 1 + random.random() * 1                                                             
         else:                                                                                        
             ms = 20 + random.random() * 10 
