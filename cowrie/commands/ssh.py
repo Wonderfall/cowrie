@@ -106,6 +106,6 @@ class command_ssh(HoneyPotCommand):
         log.msg( 'INPUT (ssh):', line )
         if len(self.callbacks):
             self.callbacks.pop(0)(line)
-commands['/usr/bin/ssh'] = command_ssh
+commands['ssh'] = command_ssh
 
 # vim: set sw=4 et:
