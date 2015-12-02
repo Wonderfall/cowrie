@@ -1,0 +1,5 @@
+-root:0:p@$$w0rd
+-root:0:p@ssw0rd
+-root:0:einstein
+-root:0:apache
+-root:0:azertyuiop
