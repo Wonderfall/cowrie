@@ -9,7 +9,6 @@ import os
 import time
 import socket
 import hashlib
-import copy
 
 from twisted.conch import recvline
 from twisted.conch.insults import insults
@@ -293,6 +292,7 @@ class HoneyPotInteractiveProtocol(HoneyPotBaseProtocol, recvline.HistoricRecvLin
         self.lastlogExit()
         HoneyPotBaseProtocol.connectionLost(self, reason)
         recvline.HistoricRecvLine.connectionLost(self, reason)
+        self.keyHandlers = None
 
 
     def initializeScreen(self):
@@ -360,7 +360,7 @@ class HoneyPotInteractiveProtocol(HoneyPotBaseProtocol, recvline.HistoricRecvLin
     def handle_CTRL_U(self):
         """
         """
-        for i in range(self.lineBufferIndex):
+        for _ in range(self.lineBufferIndex):
             self.terminal.cursorBackward()
             self.terminal.deleteCharacter()
         self.lineBuffer = self.lineBuffer[self.lineBufferIndex:]
